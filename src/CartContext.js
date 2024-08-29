@@ -9,7 +9,6 @@ const fetchCartItems = async () => {
     return products;
 };
 let products = await fetchCartItems();
-console.log(products);
 const initialState = {
   items: products, 
 
@@ -23,13 +22,11 @@ const cartSlice = createSlice({
   reducers: {
     increaseQuantity: (state, action) => {
       const item = state.items.find(item => item.id === action.payload);
-      console.log(item);
       if (item) {
         item.quantity++;
         state.totalQuantity++;
         state.totalAmount += item.price;       
       }
-      console.log(item);
     },
     decreaseQuantity: (state, action) => {
       const item = state.items.find(item => item.id === action.payload);

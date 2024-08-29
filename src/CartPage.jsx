@@ -5,7 +5,6 @@ import { increaseQuantity, decreaseQuantity, removeItem } from './CartContext';
 const Cart = () => {
   const dispatch = useDispatch();
   const { items, totalQuantity, totalAmount } = useSelector((state) => state.cart);
-console.log(items);
   return (
     <div>
       <h2>Shopping Cart</h2>
