@@ -1,19 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
-const fetchCartItems = async () => {
-    const response = await fetch('https://run.mocky.io/v3/342a1b7b-b54b-449d-92f1-07a68e6fbc7c');
-    const data = await response.json();
-   let products = data.products;
-   products.forEach(element => {
-    element.quantity=0;
-   });
-    return products;
-};
-let products = await fetchCartItems();
-const initialState = {
-  items: products, 
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// Async thunk to fetch cart items
+export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () => {
+  const response = await fetch('https://run.mocky.io/v3/342a1b7b-b54b-449d-92f1-07a68e6fbc7c');
+  const data = await response.json();
+  let products = data.products;
+  products.forEach(element => {
+    element.quantity = 0; // Initialize quantity to 0
+  });
+  return products;
+});
+
+const initialState = {
+  items: [], 
   totalQuantity: 0,
-  totalAmount: 0.00
+  totalAmount: 0.00,
+  status: 'idle', // Status for handling loading state
+  error: null, // Error state
 };
 
 const cartSlice = createSlice({
@@ -45,6 +48,20 @@ const cartSlice = createSlice({
         state.items.splice(itemIndex, 1);
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCartItems.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCartItems.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.items = action.payload; // Set items once fetched
+      })
+      .addCase(fetchCartItems.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
   }
 });
 

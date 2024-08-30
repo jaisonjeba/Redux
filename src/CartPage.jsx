@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { increaseQuantity, decreaseQuantity, removeItem } from './CartContext';
+import { increaseQuantity, decreaseQuantity, removeItem, fetchCartItems } from './CartContext.js';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { items, totalQuantity, totalAmount } = useSelector((state) => state.cart);
+  useEffect(()=>{
+    dispatch(fetchCartItems())
+  },[dispatch])
   return (
     <div>
       <h2>Shopping Cart</h2>
