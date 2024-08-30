@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 const fetchCartItems = async () => {
-    const response = await fetch('https://run.mocky.io/v3/83a2f20e-c2f7-494b-9f6b-dbb5d2e2655d');
+    const response = await fetch('https://run.mocky.io/v3/342a1b7b-b54b-449d-92f1-07a68e6fbc7c');
     const data = await response.json();
    let products = data.products;
    products.forEach(element => {
