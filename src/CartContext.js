@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Async thunk to fetch cart items
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () => {
-  const response = await fetch('https://run.mocky.io/v3/342a1b7b-b54b-449d-92f1-07a68e6fbc7c');
+  const response = await fetch('https://run.mocky.io/v3/141074b0-00e3-4e46-8b59-5ff6491e7eaf');
   const data = await response.json();
   let products = data.products;
   products.forEach(element => {
